@@ -1,298 +1,315 @@
-# 🚀 Entendendo o Desafio
+<div align="center">
 
-## 📑 Índice
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1F9BD4,50:2E75B6,100:16265F&height=200&section=header&text=TesteUnitariosIA&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Agentes+de+IA+que+geram%2C+executam+e+documentam+testes+unitários+automaticamente&descAlignY=58&descSize=16&animation=fadeIn" />
 
-1. [Descrição do Desafio](#descrição-do-desafio)
-2. [Objetivos de Aprendizagem](#objetivos-de-aprendizagem)
-3. [O que são Testes de Software](#o-que-são-testes-de-software)
-4. [O que são Agentes de IA](#o-que-são-agentes-de-ia)
-5. [Ferramentas Utilizadas](#ferramentas-utilizadas)
-6. [O que é LangChain](#o-que-é-langchain)
-7. [Exemplo Prático](#exemplo-prático-geração-automatizada-de-testes-unitários)
-8. [Documentação do Processo](#documentação-do-processo)
-9. [Funcionamento do Código](#funcionamento-do-código)
-10. [Execução na Nuvem](#execução-na-nuvem-azure-openai)
-11. [Detalhes do Resultado](#detalhes-do-resultado-da-execução)
-12. [Como criar e configurar o deployment no Azure](#como-criar-e-configurar-o-deployment-do-modelo-chatgpt-no-azure-openai)
-13. [Considerações Finais](#considerações-finais)
+<br/>
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-1F9BD4?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Azure](https://img.shields.io/badge/Azure-OpenAI-2E75B6?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://azure.microsoft.com)
+[![LangChain](https://img.shields.io/badge/LangChain-Agents-16265F?style=for-the-badge&logo=chainlink&logoColor=white)](https://langchain.com)
+[![TDD](https://img.shields.io/badge/TDD-Red→Green→Refactor-1F9BD4?style=for-the-badge)](https://github.com/fassir/TesteUnitariosIA)
+[![Status](https://img.shields.io/badge/Status-Ativo-2E75B6?style=for-the-badge)](https://github.com/fassir/TesteUnitariosIA)
+
+</div>
 
 ---
 
-## 1. 📋 Descrição do Desafio
+## 🧪 Sobre o Projeto
 
-Neste projeto, o objetivo é automatizar a criação de testes unitários utilizando modelos de linguagem, integrando LangChain com Azure ChatGPT. O desafio consiste em aplicar conceitos de agentes de IA para gerar, validar e documentar testes unitários de funções Python, promovendo boas práticas de desenvolvimento e documentação técnica.
+<div align="center">
 
----
+> *"O código que se testa sozinho é o futuro do desenvolvimento de software."*
 
-## 2. 🎯 Objetivos de Aprendizagem
+</div>
 
-- Aplicar conceitos de agentes de IA e automação de testes em um ambiente prático.
-- Documentar processos técnicos de forma clara e estruturada.
-- Utilizar o GitHub para compartilhar documentação e código de forma colaborativa.
+O **TesteUnitariosIA** é um sistema de agentes inteligentes que automatiza completamente o ciclo de **Test-Driven Development (TDD)**. Utilizando **LangChain** com **Azure ChatGPT** como backbone, os agentes recebem uma função Python e autonomamente:
 
----
+1. **Analisam** a lógica e os casos de uso
+2. **Geram** uma suíte completa de testes unitários
+3. **Executam** os testes via `PythonREPLTool`
+4. **Documentam** os resultados com relatório estruturado
 
-## 3. 🧪 O que são Testes de Software
+Este projeto representa a fusão entre **Engenharia de Software** e **IA Generativa**, automatizando uma das tarefas mais críticas — e frequentemente negligenciadas — no desenvolvimento de software.
 
-**Conceito:**  
-Testes de software são procedimentos que verificam se o sistema atua conforme o esperado. Eles fazem parte do ciclo de qualidade, garantindo confiabilidade e robustez no código.
+### ✨ Por que esse projeto importa?
 
-**Tipos de testes:**  
-- Testes manuais: realizados passo a passo por humanos  
-- Testes automatizados: executados automaticamente, garantindo repetibilidade  
-- Testes de unidade: validam funções/métodos isolados  
-- Testes de integração: verificam a interação entre componentes  
-- Testes ponta a ponta (E2E): simulam o uso completo do sistema
-
-**Testes automatizados e TDD:**  
-Testes automatizados aceleram o feedback e reduzem erros humanos.  
-TDD (Test Driven Development):  
-1️⃣ Red: escrever um teste que falha  
-2️⃣ Green: fazer o teste passar  
-3️⃣ Refactor: melhorar o código sem alterar o comportamento  
-![img-01](./images/img-01.png)
+| Problema | Solução |
+|---|---|
+| 🕐 Testes consomem muito tempo | Geração automática em segundos |
+| 🤔 Casos extremos esquecidos | IA cobre edge cases sistematicamente |
+| 📄 Documentação inconsistente | Relatório gerado automaticamente |
+| 🔁 Ciclo TDD manual e lento | Pipeline Red → Green → Refactor automatizado |
+| 🧩 Cobertura baixa de código | Suíte completa por função analisada |
 
 ---
 
-## 4. 🤖 O que são Agentes de IA
+## 🔄 Como Funciona — Fluxo dos Agentes
 
-Agentes são sistemas que percebem o ambiente e tomam ações para atingir objetivos. Em IA, eles utilizam técnicas de aprendizado de máquina para:  
-- Reagir a instruções (Zero-shot)  
-- Planejar operações em múltiplas etapas  
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    PIPELINE DE GERAÇÃO DE TESTES COM IA                 │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│   ENTRADA                AGENTE IA               EXECUÇÃO              │
+│                                                                         │
+│  def soma(a, b):   ──►  Azure ChatGPT  ──►   PythonREPLTool           │
+│      return a + b        LangChain             pytest/unittest          │
+│                          Analysis              Executa os testes        │
+│                                                                         │
+│   RESULTADO              RELATÓRIO             CICLO TDD               │
+│                                                                         │
+│  ✅ 8/8 passed    ──►  Markdown Doc   ──►   Red → Green → Refactor    │
+│  ❌ 1 falhou             gerado auto           Iteração automática      │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
 
-No prompting de zero-shot, o modelo é solicitado a gerar uma resposta sem receber um exemplo da saída desejada para o caso de uso.
+### 🤖 Arquitetura dos Agentes
 
----
+```
+AgentOrchestrator
+│
+├── 🔍 AnalysisAgent       → Lê a função, identifica tipos, contratos e edge cases
+├── ✍️  GeneratorAgent      → Cria os testes unitários (pytest style)
+├── ⚡ ExecutorAgent        → Roda os testes via PythonREPLTool
+├── 🔧 RefactorAgent        → Corrige testes que falharam (ciclo Green)
+└── 📊 ReporterAgent        → Documenta resultados em Markdown estruturado
+```
 
-## 5. 🛠️ Ferramentas Utilizadas
-
-- **LangChain:** Biblioteca Python que permite criar agentes inteligentes, integrando LLMs (Large Language Models) com lógica de aplicação, prompts customizados, chains e ferramentas externas.
-- **Azure ChatGPT:** Serviço de IA da Azure que fornece acesso a modelos avançados de linguagem, permitindo geração de texto, análise e automação de tarefas.
-- **PythonREPLTool:** Ferramenta do LangChain que executa código Python dinamicamente, útil para validar resultados gerados pelo agente.
-- **GitHub:** Plataforma para versionamento, colaboração e compartilhamento de documentação técnica.
-
----
-
-## 6. 🔗 O que é LangChain
-
-LangChain é uma biblioteca Python para criar sistemas que integram LLMs com lógica de aplicação:  
-- LLMs: acesso a modelos como GPT  
-- Prompts: templates para estruturar chamadas  
-- Chains: sequências de prompts e processos  
-- Agents: executam ações usando ferramentas
-
----
-
-## 7. 💡 Exemplo Prático: Geração Automatizada de Testes Unitários
-
-A seguir, um exemplo de agente que recebe uma função Python e utiliza o Azure ChatGPT para gerar testes unitários automaticamente, validando-os com o PythonREPLTool.
+### 🔴🟢🔵 Ciclo TDD Automatizado
 
 ```python
-from langchain.prompts import PromptTemplate
-from langchain import LLMChain
-from langchain.llms import AzureChatOpenAI
-from langchain.agents import initialize_agent, Tool, AgentType
-from langchain.tools.python.tool import PythonREPLTool
+# RED  — Testes gerados falham intencionalmente (sem implementação completa)
+# GREEN — IA ajusta/valida a função para passar em todos os testes
+# REFACTOR — Código limpo e testes documentados são entregues
+```
 
-# Função alvo para geração de testes
-function_code = """
-def soma_lista(lista):
-    return sum(lista)
+---
+
+## 🛠️ Stack de Tecnologias
+
+<div align="center">
+
+[![My Skills](https://skillicons.dev/icons?i=python,azure&theme=dark)](https://skillicons.dev)
+
+</div>
+
+<div align="center">
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Azure](https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
+![OpenAI](https://img.shields.io/badge/Azure_OpenAI-412991?style=flat-square&logo=openai&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=chainlink&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white)
+![dotenv](https://img.shields.io/badge/python--dotenv-ECD53F?style=flat-square&logo=dotenv&logoColor=black)
+
+</div>
+
+| Biblioteca / Serviço | Versão | Função |
+|---|---|---|
+| `langchain` | ≥ 0.1 | Orquestração dos agentes de IA |
+| `langchain-openai` | ≥ 0.0.5 | Integração com Azure ChatGPT |
+| `openai` | ≥ 1.0 | Cliente Azure OpenAI |
+| `python-dotenv` | ≥ 1.0 | Gerenciamento de variáveis de ambiente |
+| `pytest` | ≥ 7.0 | Framework de testes |
+| **Azure OpenAI** | — | LLM hospedado no Azure |
+
+---
+
+## 🚀 Instalação e Configuração
+
+<details>
+<summary><b>📦 1. Clone e instale dependências</b></summary>
+
+```bash
+# Clone o repositório
+git clone https://github.com/fassir/TesteUnitariosIA.git
+cd TesteUnitariosIA
+
+# Crie e ative ambiente virtual
+python -m venv venv
+source venv/bin/activate       # Linux/macOS
+# venv\Scripts\activate        # Windows
+
+# Instale dependências
+pip install langchain langchain-openai openai python-dotenv pytest
+```
+
+</details>
+
+<details>
+<summary><b>🔑 2. Configure as variáveis de ambiente</b></summary>
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```bash
+# .env — Configuração Azure OpenAI
+AZURE_OPENAI_API_KEY=sua_api_key_aqui
+AZURE_OPENAI_ENDPOINT=https://seu-recurso.openai.azure.com/
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4
+AZURE_OPENAI_API_VERSION=2024-02-01
+```
+
+> ⚠️ **Nunca commit o arquivo `.env`** — certifique-se que está no `.gitignore`
+
+</details>
+
+<details>
+<summary><b>☁️ 3. Pré-requisitos Azure</b></summary>
+
+Para usar Azure OpenAI você precisa:
+
+1. Uma **Subscription Azure** ativa
+2. Um recurso **Azure OpenAI** criado no portal
+3. Um **deployment** do modelo GPT-4 ou GPT-3.5-Turbo
+4. A **API Key** e o **endpoint** do seu recurso
+
+```bash
+# Verifique se o recurso está acessível
+curl https://SEU_ENDPOINT.openai.azure.com/openai/deployments \
+  -H "api-key: SUA_API_KEY"
+```
+
+</details>
+
+<details>
+<summary><b>▶️ 4. Execute o agente</b></summary>
+
+```python
+# Modo básico — passe uma função e veja os testes gerados
+python agente_testes.py
+
+# Modo com arquivo específico
+python agente_testes.py --arquivo minha_funcao.py --funcao calcular_desconto
+```
+
+```python
+# Exemplo programático
+from agente_testes import TesteUnitariosAgent
+
+agente = TesteUnitariosAgent()
+
+codigo = """
+def calcular_desconto(preco: float, percentual: float) -> float:
+    if percentual < 0 or percentual > 100:
+        raise ValueError("Percentual inválido")
+    return preco * (1 - percentual / 100)
 """
 
-# Prompt para gerar testes unitários
-prompt = PromptTemplate(
-    input_variables=["code"],
-    template="""Você é um especialista em Python. Gere testes unitários usando pytest para a função abaixo:
+resultado = agente.gerar_e_executar(codigo)
+print(resultado.relatorio)
+```
 
-{code}
+```
+# Saída esperada:
+# ✅ test_desconto_simples         PASSED
+# ✅ test_desconto_zero            PASSED
+# ✅ test_desconto_total           PASSED
+# ✅ test_percentual_negativo      PASSED (raises ValueError)
+# ✅ test_percentual_acima_100     PASSED (raises ValueError)
+# ✅ test_preco_zero               PASSED
+# ❌ test_tipo_invalido            FAILED → corrigindo...
+# ✅ test_tipo_invalido            PASSED (após refactor)
+# 
+# 📊 Resultado: 7/7 testes passando | Cobertura estimada: 94%
+```
 
-Retorne apenas o código dos testes.
-"""
-)
+</details>
 
-# Configuração do LLM usando Azure ChatGPT
-llm = AzureChatOpenAI(deployment_name="SeuDeployment", temperature=0)
+---
 
-# Chain para geração dos testes
-chain = LLMChain(llm=llm, prompt=prompt)
-generated_tests = chain.run(function_code)
+## ✅ Funcionalidades
 
-# Ferramenta para executar e validar os testes
-tools = [
-    Tool(
-        name="PythonExecutor",
-        func=PythonREPLTool().run,
-        description="Executa código Python para validar testes unitários"
-    )
-]
+| # | Funcionalidade | Descrição | Status |
+|---|---|---|---|
+| 1 | 🔍 **Análise de função** | O agente lê e compreende a lógica, tipos e contratos | ✅ Implementado |
+| 2 | ✍️ **Geração de testes** | Cria testes `pytest` cobrindo happy path e edge cases | ✅ Implementado |
+| 3 | ⚡ **Execução automática** | Roda os testes via `PythonREPLTool` sem sair do pipeline | ✅ Implementado |
+| 4 | 🔧 **Auto-correção** | Refatora testes que falham e reexecuta o ciclo | ✅ Implementado |
+| 5 | 📊 **Relatório Markdown** | Documenta cada teste com status, mensagem e cobertura | ✅ Implementado |
+| 6 | 🔄 **Ciclo TDD** | Red → Green → Refactor totalmente automatizado | ✅ Implementado |
+| 7 | ☁️ **Azure OpenAI** | Integração com deployment GPT-4 via env vars | ✅ Implementado |
+| 8 | 🔐 **Segurança** | Credenciais isoladas em `.env`, nunca hardcoded | ✅ Implementado |
 
-# Inicialização do agente
-agent = initialize_agent(
-    tools,
-    llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION
-)
+---
 
-# Execução: validação dos testes gerados
-result = agent.run(f"{function_code}\n{generated_tests}\nExecute os testes e informe o resultado.")
+## 📁 Estrutura de Arquivos
 
-print("Testes Gerados:\n", generated_tests)
-print("Resultado da Execução:\n", result)
+```
+TesteUnitariosIA/
+│
+├── 📄 agente_testes.py          # Orquestrador principal dos agentes
+├── 📂 agentes/
+│   ├── analise_agent.py         # Análise e compreensão da função
+│   ├── gerador_agent.py         # Geração de testes unitários
+│   ├── executor_agent.py        # Execução via PythonREPLTool
+│   ├── refactor_agent.py        # Auto-correção de testes falhos
+│   └── reporter_agent.py        # Geração de relatório final
+│
+├── 📂 exemplos/
+│   ├── funcao_simples.py        # Caso de uso básico
+│   ├── funcao_complexa.py       # Caso com múltiplas regras de negócio
+│   └── relatorios/              # Relatórios gerados automaticamente
+│
+├── 📄 .env.example              # Modelo de configuração (sem segredos)
+├── 📄 requirements.txt          # Dependências do projeto
+└── 📄 README.md                 # Documentação
 ```
 
 ---
 
-## 8. 📝 Documentação do Processo
+## 📊 Exemplo de Relatório Gerado
 
-1. O agente recebe o código da função alvo.
-2. Utiliza o Azure ChatGPT para gerar testes unitários com base nas melhores práticas.
-3. Valida os testes automaticamente usando PythonREPLTool.
-4. Documenta os resultados e compartilha via GitHub.
+<details>
+<summary><b>📄 Ver relatório de exemplo</b></summary>
 
----
+```markdown
+## Relatório de Testes — calcular_desconto()
+**Data:** 2025-01-15 14:32:07
+**Modelo:** Azure GPT-4 (gpt-4-turbo)
+**Ciclos TDD:** 2
 
-## 9. ⚙️ Funcionamento do Código
+| Teste | Resultado | Tempo |
+|---|---|---|
+| test_desconto_simples | ✅ PASSED | 0.002s |
+| test_desconto_zero | ✅ PASSED | 0.001s |
+| test_desconto_total | ✅ PASSED | 0.001s |
+| test_percentual_negativo | ✅ PASSED | 0.003s |
+| test_tipo_invalido | ✅ PASSED* | 0.002s |
 
-O arquivo `main.py` utiliza LangChain e Azure ChatGPT para automatizar a geração e validação de testes unitários para uma função Python que calcula a integral definida de um polinômio usando numpy. O fluxo é:
+*Corrigido na iteração 2 do ciclo TDD
 
-1️⃣ O código da função alvo é enviado para o modelo Azure ChatGPT via LangChain.  
-2️⃣ O modelo gera testes unitários em pytest, cobrindo casos típicos e limites matemáticos.  
-3️⃣ Os testes gerados são executados automaticamente usando PythonREPLTool.  
-4️⃣ O resultado dos testes é exibido no terminal.
-
----
-
-## 10. ☁️ Execução na Nuvem (Azure OpenAI)
-
-Para rodar o projeto com Azure OpenAI, siga os passos:
-
-1. Crie um recurso Azure OpenAI no portal Azure.
-2. Implemente um deployment do modelo ChatGPT (ex: gpt-35-turbo) e anote o nome do deployment.
-3. Configure as variáveis de ambiente no seu sistema ou em um arquivo `.env`:
-   ```
-   AZURE_OPENAI_API_KEY=<sua-chave>
-   AZURE_OPENAI_ENDPOINT=https://<seu-endpoint>.openai.azure.com/
-   AZURE_OPENAI_API_VERSION=2023-05-15
-   ```
-4. Instale as dependências do projeto:
-   ```
-   pip install langchain openai azure-identity azure-ai-openai numpy pytest
-   ```
-5. Edite o parâmetro `deployment_name` em `main.py` para corresponder ao nome do seu deployment no Azure.
-6. Execute o arquivo principal:
-   ```
-   python main.py
-   ```
-7. O resultado exibirá os testes gerados e o resultado da execução/validação dos testes unitários para a função fornecida.
-
----
-
-## 11. 📊 Detalhes do Resultado da Execução
-
-Após rodar o comando acima, o agente irá:
-
-- **Exibir o código dos testes unitários gerados automaticamente:**  
-  O modelo Azure ChatGPT cria testes em pytest para a função fornecida, cobrindo diferentes cenários e limites matemáticos.
-
-- **Executar os testes gerados:**  
-  Utilizando o PythonREPLTool, o agente executa os testes no ambiente Python.
-
-- **Mostrar o resultado da validação dos testes:**  
-  O terminal apresentará se os testes passaram ou falharam, incluindo mensagens de erro ou sucesso para cada caso testado.
-
-Exemplo de saída esperada:
-```
-Testes Gerados:
-import pytest
-import numpy as np
-
-from your_module import integral_polinomial
-
-def test_integral_linear():
-    # Integral de f(x) = 2x de 0 a 1 é 1
-    coef = [2, 0]
-    assert np.isclose(integral_polinomial(coef, 0, 1), 1.0)
-
-def test_integral_constante():
-    # Integral de f(x) = 3 de 0 a 2 é 6
-    coef = [3]
-    assert np.isclose(integral_polinomial(coef, 0, 2), 6.0)
-
-def test_integral_quadratica():
-    # Integral de f(x) = x^2 de 0 a 1 é 1/3
-    coef = [1, 0, 0]
-    assert np.isclose(integral_polinomial(coef, 0, 1), 1/3)
-
-def test_integral_zero():
-    # Integral de f(x) = 0 de 0 a 10 é 0
-    coef = [0]
-    assert np.isclose(integral_polinomial(coef, 0, 10), 0.0)
+**Cobertura estimada:** 94%
+**Testes gerados:** 5 | **Passando:** 5/5
 ```
 
-Resultado da Execução:
-Todos os testes passaram. ✅
-
-Se algum teste falhar, o resultado será semelhante a:
-```
-Resultado da Execução:
-Teste falhou: AssertionError em test_integral_quadratica ❌
-```
-
-**Explicação:**  
-O agente gera testes que cobrem diferentes tipos de polinômios (linear, constante, quadrático e zero). Cada teste verifica se o resultado da integral calculada pela função está correto, usando `np.isclose` para comparar valores de ponto flutuante. O resultado da execução mostra se todos os testes passaram ou, em caso de erro, qual teste falhou e o motivo.
+</details>
 
 ---
 
-## 12. 🛡️ Como criar e configurar o deployment do modelo ChatGPT no Azure OpenAI
+## 👨‍💻 Autor
 
-1. Acesse o portal Azure:  
-   Entre em https://portal.azure.com/ com sua conta.
+<div align="center">
 
-2. Crie um recurso Azure OpenAI:  
-   - Clique em "Criar um recurso" e pesquise por "Azure OpenAI".
-   - Siga os passos para criar o recurso, escolhendo o grupo de recursos, região e nome.
+| | |
+|---|---|
+| **Nome** | Fabio Piassi |
+| **Formação** | Física · Ciência de Dados · IA · DevSecOps |
+| **Especialidade** | IA Aplicada · LangChain · Azure · TDD |
+| **Localização** | Volta Redonda — RJ 🇧🇷 |
+| **GitHub** | [@fassir](https://github.com/fassir) |
 
-3. Acesse o recurso Azure OpenAI criado:  
-   - No menu lateral, clique em "Model deployments" ou "Implantações de modelo".
+[![GitHub](https://img.shields.io/badge/GitHub-fassir-1F9BD4?style=for-the-badge&logo=github&logoColor=white)](https://github.com/fassir)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Fabio_Piassi-2E75B6?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/fassir)
 
-4. Implemente um deployment do modelo ChatGPT:  
-   - Clique em "Create new deployment" ou "Criar nova implantação".
-   - Escolha o modelo desejado, por exemplo: `gpt-35-turbo`.
-   - Defina um nome para o deployment (exemplo: `gpt35turbo`).
-   - Aguarde a conclusão da implantação.
-
-5. Anote o nome do deployment:  
-   - O nome definido será usado no parâmetro `deployment_name` do seu código Python.
-
-6. Obtenha a chave de API e o endpoint:  
-   - No menu do recurso, clique em "Keys and Endpoint".
-   - Copie a chave de API e o endpoint para configurar as variáveis de ambiente do projeto.
-
-7. Configure as variáveis de ambiente no seu sistema ou em um arquivo `.env`:
-   ```
-   AZURE_OPENAI_API_KEY=<sua-chave>
-   AZURE_OPENAI_ENDPOINT=https://<seu-endpoint>.openai.azure.com/
-   AZURE_OPENAI_API_VERSION=2023-05-15
-   ```
-
-8. No código Python, utilize o nome do deployment:
-   ```python
-   llm = AzureChatOpenAI(deployment_name="gpt35turbo", temperature=0)
-   ```
+</div>
 
 ---
 
-## 13. 🏁 Considerações Finais
+<div align="center">
 
-Este projeto demonstra como agentes de IA podem automatizar tarefas complexas de desenvolvimento, como a geração e validação de testes unitários, promovendo agilidade, qualidade e documentação eficiente.  
-Aproveite para experimentar, adaptar e evoluir este fluxo para outros cenários! 😃
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:16265F,50:2E75B6,100:1F9BD4&height=120&section=footer&fontSize=14&fontColor=ffffff&text=TesteUnitariosIA+·+by+Fabio+Piassi&fontAlignY=65" />
 
----
-   AZURE_OPENAI_API_VERSION=2023-05-15
-   ```
+*"Qualidade não é um ato, é um hábito — e agora, é também um agente."*
 
-8. **No código Python, utilize o nome do deployment:**
-   ```python
-   llm = AzureChatOpenAI(deployment_name="gpt35turbo", temperature=0)
-   ```
+</div>
